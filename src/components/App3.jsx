@@ -9,8 +9,13 @@ import { GlobalStyle } from './GlobalStyle';
 import { Layout } from './Layout';
 
 export const App = () => {
-  const [contacts, setContacts] = useState(initialContacts()); // Виклик ф-ції initialContacts()
+  const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    const savedContacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    setContacts(savedContacts);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
@@ -57,27 +62,17 @@ export const App = () => {
     <Layout>
       <h1>Phonebook</h1>
 
-      {/* Компонент ContactForm для форми додавання контактів */}
-      <ContactForm
-        onAddContact={handleAddContact}
-        contacts={contacts} // Передаємо список контактів у ContactForm (крок 5)
-      />
+      <ContactForm onAddContact={handleAddContact} contacts={contacts} />
 
       <h2>Contacts</h2>
 
       <Filter filter={filter} onFilterChange={handleFilterChange} />
 
-      {/* Компонент ContactList для списку контактів */}
       <ContactList
         contacts={getFilteredContacts()}
-        onDeleteContact={handleDeleteContact} // Передаємо ф-цію для видалення контакту
+        onDeleteContact={handleDeleteContact}
       />
       <GlobalStyle></GlobalStyle>
     </Layout>
   );
-  // }
 };
-
-function initialContacts() {
-  return JSON.parse(localStorage.getItem('contacts')) || [];
-}

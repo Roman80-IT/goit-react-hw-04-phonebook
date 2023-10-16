@@ -9,8 +9,21 @@ import { GlobalStyle } from './GlobalStyle';
 import { Layout } from './Layout';
 
 export const App = () => {
-  const [contacts, setContacts] = useState(initialContacts()); // Виклик ф-ції initialContacts()
+  const [contacts, setContacts] = useState(initialContacts);
   const [filter, setFilter] = useState('');
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.state.contacts !== prevState.contacts) {
+  //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  //   }
+  // }
+
+  // componentDidMount() {
+  //   const savedContacts = localStorage.getItem('contacts');
+  //   if (savedContacts) {
+  //     this.setState({ contacts: JSON.parse(savedContacts) });
+  //   }
+  // }
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
@@ -21,6 +34,7 @@ export const App = () => {
   };
 
   const handleAddContact = (name, number) => {
+    //   const { contacts } = this.state;
     const isNameExist = contacts.some(contact => contact.name === name);
 
     if (isNameExist) {
@@ -53,6 +67,7 @@ export const App = () => {
     setContacts(updatedContacts);
   };
 
+  // render() {
   return (
     <Layout>
       <h1>Phonebook</h1>
