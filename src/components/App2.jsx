@@ -8,7 +8,12 @@ import { ContactList } from './ContactList/ContactList';
 import { GlobalStyle } from './GlobalStyle';
 import { Layout } from './Layout';
 
+// export class App extends Component {
 export const App = () => {
+  // state = {
+  //   contacts: [],
+  //   filter: '',
+  // };
   const [contacts, setContacts] = useState(initialContacts);
   const [filter, setFilter] = useState('');
 
@@ -29,10 +34,14 @@ export const App = () => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
+  // handleFilterChange = event => {
+  //   this.setState({ filter: event.target.value });
+  // };
   const handleFilterChange = event => {
     setFilter(event.target.value);
   };
 
+  // handleAddContact = (name, number) => {
   const handleAddContact = (name, number) => {
     //   const { contacts } = this.state;
     const isNameExist = contacts.some(contact => contact.name === name);
@@ -53,21 +62,29 @@ export const App = () => {
       id: nanoid(),
     };
 
+    // this.setState({
+    //   contacts: [...contacts, newContact],
+    // });
     setContacts([...contacts, newContact]);
   };
 
   const getFilteredContacts = () => {
+    //   const { contacts, filter } = this.state;
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   };
 
   const handleDeleteContact = id => {
+    // const { contacts } = this.state;
     const updatedContacts = contacts.filter(contact => contact.id !== id);
+    // this.setState({ contacts: updatedContacts });
     setContacts(updatedContacts);
   };
 
   // render() {
+  // const { contacts, filter } = this.state;
+
   return (
     <Layout>
       <h1>Phonebook</h1>
